@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ГОВНО РП СТАТЫ</title>
+</head>
+<body>
+    <h1>СТАТЫ ГОВНО РП</h1>
+    <a href="https://www.github.com/NVcoder24">автор этой параши</a>
+    <div>
+    <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        async function getdata() {
+            url = "http://localhost:5000/getdata"
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            return response.json();
+        }
+
+        function setdata() {
+            getdata()
+            .then((data) => {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data[0],
+                        datasets: [{
+                        label: '# of Votes',
+                        data: data[1],
+                        borderWidth: 1
+                    }]
+                    },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    }
+                );
+            });
+        }
+    </script>
+</body>
+</html>
